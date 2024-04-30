@@ -22,7 +22,11 @@ public class Transactions
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
+
     }
+
+    public Transactions(LocalDate date, LocalTime time, double accountNumber, double amount){}
+
 
     //Getters and Setters
 
@@ -76,6 +80,7 @@ public class Transactions
     {
         this.amount = amount;
     }
+
 
     // Method to format transaction as a CSV line
     public String toCSVString()
