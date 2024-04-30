@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.pluralsight.Transactions.saveTransactions;
+
 public class Main
 {
     public static void main(String[] args)
@@ -15,11 +17,14 @@ public class Main
 
         boolean running = true;
         while(running){
+            System.out.println();
             System.out.println("Welcome, please choose one of the following: ");
+            System.out.println();
             System.out.println("D.Add Deposit");
             System.out.println("P.Make Payment (Debit) ");
             System.out.println("L.Ledger");
             System.out.println("X.Exit");
+
 
             String choice = userInput.nextLine().toUpperCase();
             switch (choice){
@@ -40,7 +45,7 @@ public class Main
             }
         }
 
-        Transactions.saveTransactions(transactions);
+        saveTransactions(transactions); // Updated method call
         userInput.close();
 
     }
@@ -73,6 +78,7 @@ public class Main
 
         System.out.println("Enter payment amount: ");
         double amount = userInput.nextDouble();
+        userInput.nextLine();
 
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();

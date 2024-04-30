@@ -1,8 +1,6 @@
 package com.pluralsight;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -104,10 +102,14 @@ public class Transactions
 
     // Method to save transactions to the CSV file
     public static void saveTransactions(List<Transactions> transactions) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transactions.csv"))) {
+        File file = new File("Files/transactions.csv");
+        System.out.println("File path: " + file.getAbsolutePath());
+
+        try (FileWriter fileWriter = new FileWriter(file, true);
+             PrintWriter writer = new PrintWriter(fileWriter)) {
+
             for (Transactions transaction : transactions) {
-                writer.write(transaction.toCSVString());
-                writer.newLine();
+                writer.println(transaction.toCSVString());
             }
         } catch (IOException e) {
             e.printStackTrace();
