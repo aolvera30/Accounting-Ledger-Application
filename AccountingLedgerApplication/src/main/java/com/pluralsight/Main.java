@@ -52,9 +52,6 @@ public class Main
 
     private static void addDeposit(Scanner userInput, List<Transactions> transactions)
     {
-        System.out.println("Enter deposit amount: ");
-        double amount = userInput.nextDouble();
-        userInput.nextLine();
 
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
@@ -64,6 +61,10 @@ public class Main
 
         System.out.println("Enter deposit vendor: ");
         String vendor = userInput.nextLine();
+
+        System.out.println("Enter deposit amount: ");
+        double amount = userInput.nextDouble();
+        userInput.nextLine();
 
 
         Transactions deposit = new Transactions(date, time, description, vendor, amount);
@@ -77,17 +78,21 @@ public class Main
 
     private static void makePayment(Scanner userInput, List<Transactions> transactions)
     {
-        System.out.println("Enter checking account number: ");
-        double accountNumber = userInput.nextDouble();
-
-        System.out.println("Enter payment amount: ");
-        double amount = userInput.nextDouble();
-        userInput.nextLine();
-
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
 
-        Transactions payment = new Transactions(date, time, accountNumber, amount );
+        System.out.println("What is this payment for? ");
+        String description = userInput.nextLine();
+
+        System.out.println("Who is this payment from? ");
+        String vendor = userInput.nextLine();
+
+        System.out.println("How much is the payment amount?");
+        double amount = userInput.nextDouble();
+        userInput.nextLine();
+
+
+        Transactions payment = new Transactions(date, time, description, vendor, amount);
         transactions.add(payment);
 
         Transactions.saveTransactions(transactions);

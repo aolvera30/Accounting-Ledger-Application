@@ -23,8 +23,6 @@ public class Transactions
 
     }
 
-    public Transactions(LocalDate date, LocalTime time, double accountNumber, double amount){}
-
 
     //Getters and Setters
 
@@ -86,6 +84,7 @@ public class Transactions
         return String.format("%s | %s | %s | %s | %.2f",
                 date, time, description, vendor, amount);
     }
+
 
     // Method to create Transaction object from CSV line
     public static Transactions fromCSVString(String csvLine)
