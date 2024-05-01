@@ -103,16 +103,20 @@ public class Transactions
     // Method to save transactions to the CSV file
     public static void saveTransactions(List<Transactions> transactions) {
         File file = new File("Files/transactions.csv");
-        System.out.println("File path: " + file.getAbsolutePath());
 
         try (FileWriter fileWriter = new FileWriter(file, true);
-             PrintWriter writer = new PrintWriter(fileWriter)) {
-
-            for (Transactions transaction : transactions) {
+             PrintWriter writer = new PrintWriter(fileWriter)
+        )
+        {
+            for(Transactions transaction : transactions)
+            {
                 writer.println(transaction.toCSVString());
+                writer.flush();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+        catch (IOException ex)
+        {
+
         }
     }
 }

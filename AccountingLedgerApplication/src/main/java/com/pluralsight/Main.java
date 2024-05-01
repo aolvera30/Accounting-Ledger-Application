@@ -65,8 +65,12 @@ public class Main
         System.out.println("Enter deposit vendor: ");
         String vendor = userInput.nextLine();
 
+
         Transactions deposit = new Transactions(date, time, description, vendor, amount);
         transactions.add(deposit);
+
+        Transactions.saveTransactions(transactions);
+
         System.out.println("Deposit added successfully :) ");
 
     }
@@ -85,6 +89,9 @@ public class Main
 
         Transactions payment = new Transactions(date, time, accountNumber, amount );
         transactions.add(payment);
+
+        Transactions.saveTransactions(transactions);
+
         System.out.println("Payment made successfully :) ");
 
     }
