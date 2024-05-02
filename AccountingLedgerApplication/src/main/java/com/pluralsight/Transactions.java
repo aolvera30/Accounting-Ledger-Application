@@ -3,7 +3,9 @@ package com.pluralsight;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Transactions
 {
@@ -100,22 +102,42 @@ public class Transactions
 
 
     // Method to save transactions to the CSV file
-    public static void saveTransactions(List<Transactions> transactions) {
+    public static void saveTransactions(List<Transactions> transactions)
+    {
         File file = new File("Files/transactions.csv");
 
         try (FileWriter fileWriter = new FileWriter(file, true);
-             PrintWriter writer = new PrintWriter(fileWriter)
-        )
-        {
-            for(Transactions transaction : transactions)
-            {
+             PrintWriter writer = new PrintWriter(fileWriter)) {
+            for (Transactions transaction : transactions) {
                 writer.println(transaction.toCSVString());
                 writer.flush();
             }
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
+            System.out.println("Error writing transactions to file: " + ex.getMessage());
 
         }
     }
+
+    // Method to load transactions from the CSV file
+    public static List<Transactions> loadTransactions()
+    {
+        List<Transactions> transactions = new ArrayList<>();
+        File file = new File("Files/transactions.csv");
+
+        try (Scanner userInput = new Scanner(file)) {
+            while (userInput.hasNextLine()) {
+                String line = userInput.nextLine().trim();
+                if (!line.isEmpty()) { // Skip empty lines
+                    Transactions transaction = Transactions.fromCSVString(line);
+                    transactions.add(transaction);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+
+        return transactions;
+    }
 }
+
+

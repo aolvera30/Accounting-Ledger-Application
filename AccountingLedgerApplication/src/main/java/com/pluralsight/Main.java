@@ -2,7 +2,6 @@ package com.pluralsight;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,27 +11,28 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Scanner userInput = new Scanner(System.in);
-        List<Transactions> transactions = new ArrayList<>();
+        // Load transactions from file
+        List<Transactions> transactions = Transactions.loadTransactions();
 
+        Scanner userInput = new Scanner(System.in);
         boolean running = true;
-        while(running){
+        while (running) {
             System.out.println();
             System.out.println("Welcome, please choose one of the following: ");
             System.out.println();
             System.out.println("D.Add Deposit");
-            System.out.println("P.Make Payment (Debit) ");
+            System.out.println("P.Make Payment");
             System.out.println("L.Ledger");
             System.out.println("X.Exit");
 
 
             String choice = userInput.nextLine().toUpperCase();
-            switch (choice){
+            switch (choice) {
                 case "D":
                     addDeposit(userInput, transactions);
                     break;
                 case "P":
-                    makePayment(userInput,transactions);
+                    makePayment(userInput, transactions);
                     break;
                 case "L":
                     viewLedger(transactions);
@@ -59,7 +59,7 @@ public class Main
         System.out.println("Enter deposit description: ");
         String description = userInput.nextLine();
 
-        System.out.println("Enter deposit vendor: ");
+        System.out.println("Enter child's name: ");
         String vendor = userInput.nextLine();
 
         System.out.println("Enter deposit amount: ");
@@ -81,16 +81,18 @@ public class Main
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
 
-        System.out.println("What is this payment for? ");
+        System.out.println("Enter payment description: ");
         String description = userInput.nextLine();
 
-        System.out.println("Who is this payment from? ");
+        System.out.println("Enter vendor's name");
         String vendor = userInput.nextLine();
 
-        System.out.println("How much is the payment amount?");
+        System.out.println("Enter payment amount: ");
         double amount = userInput.nextDouble();
         userInput.nextLine();
 
+        // Make the payment amount negative
+        amount = -Math.abs(amount);
 
         Transactions payment = new Transactions(date, time, description, vendor, amount);
         transactions.add(payment);
@@ -105,7 +107,7 @@ public class Main
     {
         Scanner userInput = new Scanner(System.in);
 
-        while(true){
+        while (true) {
             System.out.println("Ledger Display Options: ");
             System.out.println("A. All Entries");
             System.out.println("D. Deposits");
@@ -114,7 +116,7 @@ public class Main
             System.out.println("O. Back");
 
             String choice = userInput.nextLine().toUpperCase();
-            switch (choice){
+            switch (choice) {
                 case "A":
                     displayAllEntries(transactions);
                     break;
@@ -139,22 +141,36 @@ public class Main
             }
 
 
-
         }
-        
+
     }
 
     private static void displayAllEntries(List<Transactions> transactions)
     {
+        System.out.println("All Entries:");
+        for (Transactions transaction : transactions) {
+            System.out.println(transaction.toCSVString());
+        }
     }
-
 
     private static void displayDeposits(List<Transactions> transactions)
     {
+        System.out.println("Deposits:");
+        for (Transactions transaction : transactions) {
+            if (transaction.getAmount() > 0) {
+                System.out.println(transaction.toCSVString());
+            }
+        }
     }
 
     private static void displayPayments(List<Transactions> transactions)
     {
+        System.out.println("Payments:");
+        for (Transactions transaction : transactions) {
+            if (transaction.getAmount() < 0) {
+                System.out.println(transaction.toCSVString());
+            }
+        }
     }
-
 }
+
