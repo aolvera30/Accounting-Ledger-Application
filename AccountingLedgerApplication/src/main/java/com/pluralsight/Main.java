@@ -45,7 +45,7 @@ public class Main
             }
         }
 
-        saveTransactions(transactions); // Updated method call
+        saveTransactions(transactions);
         userInput.close();
 
     }
@@ -103,6 +103,58 @@ public class Main
 
     private static void viewLedger(List<Transactions> transactions)
     {
+        Scanner userInput = new Scanner(System.in);
+
+        while(true){
+            System.out.println("Ledger Display Options: ");
+            System.out.println("A. All Entries");
+            System.out.println("D. Deposits");
+            System.out.println("P. Payments");
+            System.out.println("R. Reports");
+            System.out.println("O. Back");
+
+            String choice = userInput.nextLine().toUpperCase();
+            switch (choice){
+                case "A":
+                    displayAllEntries(transactions);
+                    break;
+
+                case "D":
+                    displayDeposits(transactions);
+                    break;
+
+                case "P":
+                    displayPayments(transactions);
+                    break;
+
+                case "R":
+                    Reports.displayReports(userInput, transactions); // Call displayReports from Reports class
+                    break;
+
+                case "O":
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+
+
+
+        }
         
     }
+
+    private static void displayAllEntries(List<Transactions> transactions)
+    {
+    }
+
+
+    private static void displayDeposits(List<Transactions> transactions)
+    {
+    }
+
+    private static void displayPayments(List<Transactions> transactions)
+    {
+    }
+
 }
